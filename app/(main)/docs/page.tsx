@@ -26,14 +26,12 @@ export default function Page() {
   if (!isMounted) return null;
 
   return (
-    <>
-      <DocSidebar />
-
-      <main>
+    <div className="container mx-auto">
+      <div className="flex flex-col lg:grid lg:grid-cols-[240px_1fr_240px] gap-8">
+        <DocSidebar />
         <Docker />
-      </main>
-
-      <TableOfContent options={options} />
-    </>
+        <TableOfContent options={options} />
+      </div>
+    </div>
   );
 }
