@@ -7,32 +7,18 @@ import React from "react";
 import { Button } from "@/components/ui/button";
 import { ChevronRight, Menu, X } from "lucide-react";
 import { ThemeToggle } from "@/components/theme-toggle";
+import { systems } from "@/lib/sidebar-content";
 
-const navbarItems = [
-  {
-    label: "Examples",
-    href: "#examples",
-  },
-  {
-    label: "Features",
-    href: "#features",
-  },
-  {
-    label: "Pricing",
-    href: "/pricing",
-  },
-  {
-    label: "Roadmap",
-    href: "#roadmap",
-  },
-  {
-    label: "FAQ",
-    href: "#faq",
-  },
-];
+interface NavbarItemsProps {
+  label: string;
+  href: string;
+}
+
+const navbarItems: NavbarItemsProps[] = [];
 
 export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = React.useState<boolean>(false);
+  const [openSystem, setOpenSystem] = React.useState<string | null>(null);
   const [isScrolled, setIsScrolled] = React.useState<boolean>(false);
 
   React.useEffect(() => {
@@ -139,9 +125,10 @@ export function Header() {
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -20 }}
-          className="bg-background/95 absolute inset-x-0 top-16 border-b backdrop-blur-lg md:hidden"
+          className="bg-background/95 absolute inset-x-0 top-16 max-h-[calc(100vh-4rem)] overflow-y-auto overflow-x-hidden border-b backdrop-blur-lg md:hidden"
         >
           <div className="container mx-auto flex flex-col gap-4 px-4 py-4">
+            {/* Page Navigations */}
             {navbarItems.map((item, i) => (
               <motion.a
                 key={item.label}
@@ -159,6 +146,63 @@ export function Header() {
               </motion.a>
             ))}
 
+            {/* Systems Navigation */}
+            {systems.map((system, i) => (
+              <div key={system.title} className="flex flex-col">
+                {/* Systems Header */}
+                <motion.div
+                  initial={{ opacity: 0, x: -10 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{
+                    duration: 0.2,
+                    delay: (navbarItems.length - 1 + i) * 0.05,
+                  }}
+                  onClick={() =>
+                    setOpenSystem(
+                      openSystem === system.title ? null : system.title
+                    )
+                  }
+                  className="flex items-center justify-between"
+                >
+                  <span className="font-medium">{system.title}</span>
+
+                  <Button variant="ghost" size="icon">
+                    <ChevronRight
+                      className={cn(
+                        "size-5 transition-transform duration-300 ease-in-out",
+                        openSystem === system.title ? "rotate-90" : "rotate-0"
+                      )}
+                    />
+                  </Button>
+                </motion.div>
+
+                {/* Systems Dropdown */}
+                {openSystem === system.title && (
+                  <motion.div
+                    initial={{ opacity: 0, height: 0 }}
+                    animate={{ opacity: 1, height: "auto" }}
+                    exit={{ opacity: 0, height: 0 }}
+                    transition={{ duration: 0.3 }}
+                    className="overflow-hidden"
+                  >
+                    <div className="flex flex-col gap-3 pt-2 px-2">
+                      {system.items.map((item) => (
+                        <Link
+                          key={item.href}
+                          href={`/${item.href}`}
+                          onClick={() => setMobileMenuOpen(false)}
+                          className="text-sm text-muted-foreground hover:text-foreground"
+                        >
+                          {item.label}
+                        </Link>
+                      ))}
+                    </div>
+                  </motion.div>
+                )}
+              </div>
+            ))}
+
+            {/* CTA */}
             <motion.div
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
