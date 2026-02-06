@@ -55,7 +55,7 @@ export default function Page() {
           pages={sidebar.pages}
         />
 
-        <div className="p-3 md:p-5 lg:p-0">
+        <div className="p-4 md:p-5 lg:p-0">
           <PageComponent />
           <PageNavigator
             systemSlug={systemSlug}

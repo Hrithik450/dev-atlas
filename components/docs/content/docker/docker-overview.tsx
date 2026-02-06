@@ -14,7 +14,7 @@ export const InstallationForMac = () => {
     >
       <div className="w-full text-foreground mx-auto">
         <header className="mb-6 border-b border-foreground/40">
-          <h1 className="text-3xl font-medium flex items-center gap-3 mb-6">
+          <h1 className="text-xl md:text-2xl font-medium flex items-center gap-3 mb-6">
             Install Docker on macOS
           </h1>
         </header>
@@ -152,7 +152,7 @@ export const WorkflowDocumentation = () => {
         </div>
 
         <div className="mb-12">
-          <h4 className="text-2xl font-medium mb-4">
+          <h4 className="text-xl md:text-2xl font-medium mb-4">
             Client-Server Architecture
           </h4>
           <p>
@@ -162,7 +162,9 @@ export const WorkflowDocumentation = () => {
         </div>
 
         <div className="mb-12">
-          <h2 className="text-2xl font-medium mb-4">Why do we need docker ?</h2>
+          <h2 className="text-xl md:text-2xl font-medium mb-4">
+            Why do we need docker ?
+          </h2>
           <div className="grid md:grid-cols-2 gap-8">
             <div className="p-5 rounded-lg border border-foreground/20">
               <h3 className="font-medium mb-3">Before Docker (The Chaos)</h3>
@@ -188,13 +190,15 @@ export const WorkflowDocumentation = () => {
         </div>
 
         <div className="mb-12">
-          <h2 className="text-2xl font-medium mb-8">
+          <h2 className="text-xl md:text-2xl font-medium mb-8">
             Understanding the Docker Workflow
           </h2>
 
           <div className="space-y-8 mt-8">
             <div className="space-y-4">
-              <h3 className="text-2xl font-medium">1. Docker Client</h3>
+              <h3 className="text-xl md:text-2xl font-medium">
+                1. Docker Client
+              </h3>
 
               <p>
                 The Docker Client is the primary interface you use to interact
@@ -235,7 +239,7 @@ export const WorkflowDocumentation = () => {
             </div>
 
             <div className="space-y-6">
-              <h3 className="text-2xl font-medium">
+              <h3 className="text-xl md:text-2xl font-medium">
                 2. Docker Host (The Engine)
               </h3>
 
@@ -345,7 +349,9 @@ export const WorkflowDocumentation = () => {
             </div>
 
             <div className="space-y-6">
-              <h3 className="text-2xl font-medium">3. Docker Registry</h3>
+              <h3 className="text-xl md:text-2xl font-medium">
+                3. Docker Registry
+              </h3>
 
               <p>
                 A Docker Registry is a centralized storage system where Docker
