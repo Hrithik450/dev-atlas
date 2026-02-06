@@ -45,7 +45,7 @@ export const InstallationForMac = () => {
           <a
             href="https://www.docker.com/products/docker-desktop/"
             target="_blank"
-            className="text-blue-600 underline"
+            className="text-blue-600 underline break-all"
           >
             https://www.docker.com/products/docker-desktop/
           </a>
@@ -137,7 +137,7 @@ export const WorkflowDocumentation = () => {
             </h1>
 
             <div className="text-sm text-muted-foreground">
-              Last updated: 05 Feb 2026
+              Last updated: 06 Feb 2026
             </div>
           </div>
         </header>
@@ -145,7 +145,7 @@ export const WorkflowDocumentation = () => {
         <div className="mb-12">
           <div className="p-5 rounded-xl shadow-xs border border-foreground/20 border-l-4 border-l-foreground/50">
             <p className="text-muted-foreground text-sm">
-              Docker packs your application, dependencies, and runtime into a
+              Docker packs your application, dependencies, and configs into a
               portable box called a <strong>container</strong>, so it runs the
               same everywhere.{" "}
               <span className="italic">
@@ -176,7 +176,7 @@ export const WorkflowDocumentation = () => {
               <h3 className="font-medium mb-3">Before Docker (The Chaos)</h3>
               <ul className="space-y-2 text-sm list-disc pl-5">
                 <li>Mismatched Node/Python versions</li>
-                <li>Missing system libraries (DLLs/Shared Objects)</li>
+                <li>Missing system libraries</li>
                 <li>OS differences (Mac vs Linux)</li>
                 <li>Conflicting dependencies</li>
               </ul>
@@ -185,9 +185,7 @@ export const WorkflowDocumentation = () => {
               <h3 className="font-medium mb-3">After Docker (The Order)</h3>
               <ul className="space-y-2 text-sm list-disc pl-5">
                 <li>Identical environment for every dev</li>
-                <li>
-                  One-command setup (<code>docker compose up</code>)
-                </li>
+                <li>One-command setup</li>
                 <li>Instant developer onboarding</li>
                 <li>Reliable deployments</li>
               </ul>
