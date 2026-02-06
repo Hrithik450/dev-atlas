@@ -8,9 +8,11 @@ import Link from "next/link";
 
 export function DocSidebar<T extends SystemSlug>({
   label,
+  slug,
   pages,
 }: {
   label: string;
+  slug: string;
   pages: DocSidebarPage<T>[];
 }) {
   const isMounted = useMounted();
@@ -29,7 +31,7 @@ export function DocSidebar<T extends SystemSlug>({
               {pages.map((page) => (
                 <Link
                   key={page.slug}
-                  href={`/${page.slug}`}
+                  href={`/docs/${slug}/${page.slug}`}
                   className="w-full justify-start px-4 py-1.5 text-sm font-medium text-muted-foreground hover:bg-accent hover:text-accent-foreground rounded-md flex transition-colors"
                 >
                   {page.label}
