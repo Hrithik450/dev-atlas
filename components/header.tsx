@@ -7,14 +7,9 @@ import React from "react";
 import { Button } from "@/components/ui/button";
 import { ChevronRight, Menu, X } from "lucide-react";
 import { ThemeToggle } from "@/components/theme-toggle";
-import { systems } from "@/lib/sidebar-content";
+import { docSidebars } from "@/lib/sidebar-content";
 
-interface NavbarItemsProps {
-  label: string;
-  href: string;
-}
-
-const navbarItems: NavbarItemsProps[] = [];
+const navbarItems: { label: string; slug: string }[] = [];
 
 export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = React.useState<boolean>(false);
@@ -63,9 +58,9 @@ export function Header() {
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.3, delay: 0.1 + i * 0.05 }}
-              href={item.href}
+              href={item.slug}
               onClick={
-                item.href.startsWith("#") ? handleScrollToSection : undefined
+                item.slug.startsWith("#") ? handleScrollToSection : undefined
               }
               className="text-muted-foreground hover:text-foreground group relative font-medium transition-colors text-sm"
             >
@@ -135,20 +130,20 @@ export function Header() {
                 initial={{ opacity: 0, x: -10 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.2, delay: i * 0.05 }}
-                href={item.href}
+                href={item.slug}
                 onClick={(e) => {
                   handleScrollToSection(e);
                   setMobileMenuOpen(false);
                 }}
                 className="group relative overflow-hidden py-2 text-sm font-medium"
               >
-                <span className="relative z-10">{item.href}</span>
+                <span className="relative z-10">{item.slug}</span>
               </motion.a>
             ))}
 
             {/* Systems Navigation */}
-            {systems.map((system, i) => (
-              <div key={system.title} className="flex flex-col">
+            {docSidebars.map((sidebar, i) => (
+              <div key={sidebar.label} className="flex flex-col">
                 {/* Systems Header */}
                 <motion.div
                   initial={{ opacity: 0, x: -10 }}
@@ -159,25 +154,25 @@ export function Header() {
                   }}
                   onClick={() =>
                     setOpenSystem(
-                      openSystem === system.title ? null : system.title
+                      openSystem === sidebar.label ? null : sidebar.label
                     )
                   }
                   className="flex items-center justify-between"
                 >
-                  <span className="font-medium">{system.title}</span>
+                  <span className="font-medium">{sidebar.label}</span>
 
                   <Button variant="ghost" size="icon">
                     <ChevronRight
                       className={cn(
                         "size-5 transition-transform duration-300 ease-in-out",
-                        openSystem === system.title ? "rotate-90" : "rotate-0"
+                        openSystem === sidebar.label ? "rotate-90" : "rotate-0"
                       )}
                     />
                   </Button>
                 </motion.div>
 
                 {/* Systems Dropdown */}
-                {openSystem === system.title && (
+                {openSystem === sidebar.label && (
                   <motion.div
                     initial={{ opacity: 0, height: 0 }}
                     animate={{ opacity: 1, height: "auto" }}
@@ -186,16 +181,17 @@ export function Header() {
                     className="overflow-hidden"
                   >
                     <div className="flex flex-col gap-3 pt-2 px-2">
-                      {system.items.map((item) => (
-                        <Link
-                          key={item.href}
-                          href={`/${item.href}`}
-                          onClick={() => setMobileMenuOpen(false)}
-                          className="text-sm text-muted-foreground hover:text-foreground"
-                        >
-                          {item.label}
-                        </Link>
-                      ))}
+                      {sidebar.pages &&
+                        sidebar.pages.map((page) => (
+                          <Link
+                            key={page.slug}
+                            href={`/${page.slug}`}
+                            onClick={() => setMobileMenuOpen(false)}
+                            className="text-sm text-muted-foreground hover:text-foreground"
+                          >
+                            {page.label}
+                          </Link>
+                        ))}
                     </div>
                   </motion.div>
                 )}

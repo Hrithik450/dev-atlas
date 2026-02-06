@@ -6,13 +6,13 @@ import { motion } from "motion/react";
 import { Separator } from "@/components/ui/separator";
 
 interface TableOfContentProps {
-  options: {
+  sections: {
     hash: string;
     title: string;
   }[];
 }
 
-export const TableOfContent: React.FC<TableOfContentProps> = ({ options }) => {
+export const TableOfContent: React.FC<TableOfContentProps> = ({ sections }) => {
   const [activeHash, setActiveHash] = React.useState<string>("");
 
   React.useEffect(() => {
@@ -30,13 +30,13 @@ export const TableOfContent: React.FC<TableOfContentProps> = ({ options }) => {
       }
     );
 
-    options.forEach((opt) => {
+    sections.forEach((opt) => {
       const el = document.getElementById(opt.hash);
       if (el) observer.observe(el);
     });
 
     return () => observer.disconnect();
-  }, [options]);
+  }, [sections]);
 
   const handleScroll = (
     e: React.MouseEvent<HTMLAnchorElement>,
@@ -59,7 +59,7 @@ export const TableOfContent: React.FC<TableOfContentProps> = ({ options }) => {
         {/* The consistent vertical background line */}
         <div className="absolute left-0 top-0 h-full w-[2px] bg-muted" />
 
-        {options.map((option) => {
+        {sections.map((option) => {
           return (
             <a
               key={option.hash}

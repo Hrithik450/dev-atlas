@@ -480,7 +480,7 @@ export const WorkflowDiagram = () => {
   );
 };
 
-export const Docker = () => {
+export const DockerOverview = () => {
   return (
     <div>
       <WorkflowDiagram />
