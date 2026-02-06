@@ -7,6 +7,7 @@ import { DocSidebar } from "@/components/docs/docs-sidebar";
 import { notFound, useParams } from "next/navigation";
 import { SystemSlug, docsRegistry } from "@/lib/docs-registry";
 import { docSidebars } from "@/lib/sidebar-content";
+import { PageNavigator } from "@/components/docs/page-navigator";
 
 export default function Page() {
   const isMounted = useMounted();
@@ -44,7 +45,6 @@ export default function Page() {
   if (!sidebar) return notFound();
 
   const PageComponent = system.pages[page];
-  console.log(PageComponent);
 
   return (
     <div className="container mx-auto">
@@ -54,7 +54,15 @@ export default function Page() {
           slug={sidebar.slug}
           pages={sidebar.pages}
         />
-        <PageComponent />
+        <div>
+          <PageComponent />
+          <PageNavigator
+            systemSlug={systemSlug}
+            currentSlug={page}
+            pages={sidebar.pages}
+          />
+        </div>
+
         <TableOfContent sections={sections} />
       </div>
     </div>

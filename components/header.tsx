@@ -185,7 +185,7 @@ export function Header() {
                         sidebar.pages.map((page) => (
                           <Link
                             key={page.slug}
-                            href={`/${page.slug}`}
+                            href={`/docs/${sidebar.slug}/${page.slug}`}
                             onClick={() => setMobileMenuOpen(false)}
                             className="text-sm text-muted-foreground hover:text-foreground"
                           >
