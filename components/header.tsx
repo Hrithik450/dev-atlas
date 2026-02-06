@@ -38,20 +38,18 @@ export function Header() {
   return (
     <header
       className={cn(
-        "sticky top-0 z-50 w-full backdrop-blur-lg",
-        isScrolled
-          ? "bg-background/90 border border/20 border-b shadow-xs"
-          : "bg-transparent"
+        "sticky top-0 z-50 w-full border border/20 border-b backdrop-blur-lg",
+        isScrolled ? "bg-background/90 shadow-xs" : "bg-background"
       )}
     >
-      <div className="container mx-auto flex items-center justify-between h-16 px-4 md:px-16">
+      <div className="container mx-auto flex items-center justify-between h-16 px-4 md:px-6">
         <Link href="/">
           <div className="flex items-center gap-2 font-bold">
             <span>DevAtlas</span>
           </div>
         </Link>
 
-        <nav className="hidden md:flex items-center gap-4 lg:gap-8">
+        <nav className="hidden lg:flex items-center gap-4 lg:gap-8">
           {navbarItems.map((item, i) => (
             <motion.a
               key={item.label}
@@ -70,7 +68,7 @@ export function Header() {
           ))}
         </nav>
 
-        <div className="hidden md:flex cursor-pointer items-center gap-4">
+        <div className="hidden lg:flex cursor-pointer items-center gap-4">
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -97,7 +95,7 @@ export function Header() {
           </motion.div>
         </div>
 
-        <div className="flex items-center gap-2 md:hidden">
+        <div className="flex items-center gap-2 lg:hidden">
           <ThemeToggle variant="ghost" size="icon" />
 
           <Button
@@ -120,7 +118,7 @@ export function Header() {
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -20 }}
-          className="bg-background/95 absolute inset-x-0 top-16 max-h-[calc(100vh-4rem)] overflow-y-auto overflow-x-hidden border-b backdrop-blur-lg md:hidden"
+          className="bg-background/95 absolute inset-x-0 top-16 max-h-[calc(100vh-4rem)] overflow-y-auto overflow-x-hidden border-b backdrop-blur-lg lg:hidden"
         >
           <div className="container mx-auto flex flex-col gap-4 px-4 py-4">
             {/* Page Navigations */}

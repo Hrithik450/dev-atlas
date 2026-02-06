@@ -20,7 +20,7 @@ export function PageNavigator<T extends SystemSlug>({
   const next = pages[currentIndex + 1];
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-12 pt-6 border-t border-border">
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-12 pt-6">
       {prev ? (
         <Link
           href={`/docs/${systemSlug}/${prev.slug}`}

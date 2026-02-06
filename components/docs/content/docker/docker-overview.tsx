@@ -121,12 +121,19 @@ export const WorkflowDocumentation = () => {
       id="workflow-documentation"
       data-nav-title="Workflow Documentation"
       data-scrollspy
-      className="animate-in fade-in slide-in-from-bottom-4 duration-500 pt-12"
+      className="animate-in fade-in slide-in-from-bottom-4 duration-500 pt-8 md:pt-12"
     >
       <div className="w-full text-foreground mx-auto">
-        <header className="mb-6 border-b border-foreground/40 flex justify-between items-baseline">
-          <h1 className="text-3xl font-medium mb-6">Docker</h1>
-          <span className="block">Last Updated: 05-Feb-2026</span>
+        <header className="mb-8 border-b border-border pb-4">
+          <div className="flex flex-col gap-2 sm:flex-row sm:items-baseline sm:justify-between">
+            <h1 className="text-2xl md:text-3xl font-semibold tracking-tight">
+              Docker
+            </h1>
+
+            <div className="text-sm text-muted-foreground">
+              Last updated: 05 Feb 2026
+            </div>
+          </div>
         </header>
 
         <div className="mb-12">
@@ -458,13 +465,13 @@ export const WorkflowDiagram = () => {
       id="workflow-diagram"
       data-scrollspy
       data-nav-title="Workflow Diagram"
-      className="pt-20"
+      className="pt-6 md:pt-20"
     >
-      <div className="relative w-full overflow-hidden rounded-4xl p-0.5 bg-[linear-gradient(to_right,var(--border-gradient-from),var(--border-gradient-via),var(--border-gradient-to))] shadow-xs">
+      <div className="relative w-full overflow-hidden rounded-xl md:rounded-4xl p-0.5 bg-[linear-gradient(to_right,var(--border-gradient-from),var(--border-gradient-via),var(--border-gradient-to))] shadow-xs">
         <button
           onClick={openInNewTab}
           aria-label="Open image in new tab"
-          className="absolute top-4 right-4 z-10 rounded-full p-1.5 bg-foreground/70 backdrop-blur-md border border-background/10 hover:scale-105 active:scale-95 transition-all duration-200"
+          className="absolute top-2 md:top-4 right-2 md:right-4 z-10 rounded-full p-1.5 bg-foreground/70 backdrop-blur-md border border-background/10 hover:scale-105 active:scale-95 transition-all duration-200"
         >
           <Maximize2 className="w-3 h-3 text-background" />
         </button>
@@ -472,7 +479,7 @@ export const WorkflowDiagram = () => {
         <Image
           src={DockerIntroImage}
           alt="Docker Architecture Diagram"
-          className="w-full h-auto object-contain rounded-4xl"
+          className="w-full h-auto object-contain rounded-xl md:rounded-4xl"
           priority
         />
       </div>

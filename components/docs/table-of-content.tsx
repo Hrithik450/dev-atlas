@@ -25,7 +25,7 @@ export const TableOfContent: React.FC<TableOfContentProps> = ({ sections }) => {
         });
       },
       {
-        rootMargin: "-45% 0px -45% 0px",
+        rootMargin: "-20% 0px -80% 0px",
         threshold: 0,
       }
     );
