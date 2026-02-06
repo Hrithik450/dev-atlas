@@ -4,122 +4,122 @@ import DockerIntroImage from "@/assets/content/docker-intro.png";
 import { Maximize2 } from "lucide-react";
 import Image from "next/image";
 
-export const InstallationForMac = () => {
-  return (
-    <section
-      id="installation-for-mac"
-      data-nav-title="Installation for macOS"
-      data-scrollspy
-      className="pt-6 space-y-8"
-    >
-      <div className="w-full text-foreground mx-auto">
-        <header className="mb-6 border-b border-foreground/40">
-          <h1 className="text-xl md:text-2xl font-medium flex items-center gap-3 mb-6">
-            Install Docker on macOS
-          </h1>
-        </header>
+// export const InstallationForMac = () => {
+//   return (
+//     <section
+//       id="installation-for-mac"
+//       data-nav-title="Installation for macOS"
+//       data-scrollspy
+//       className="pt-6 space-y-8"
+//     >
+//       <div className="w-full text-foreground mx-auto">
+//         <header className="mb-6 border-b border-foreground/40">
+//           <h1 className="text-xl md:text-2xl font-medium flex items-center gap-3 mb-6">
+//             Install Docker on macOS
+//           </h1>
+//         </header>
 
-        <div className="mb-12 space-y-3">
-          <h3 className="text-lg md:text-xl font-medium">
-            Step 0 — Check Your Mac Type
-          </h3>
+//         <div className="mb-12 space-y-3">
+//           <h3 className="text-lg md:text-xl font-medium">
+//             Step 0 — Check Your Mac Type
+//           </h3>
 
-          <p>
-            Click the Apple logo () → <strong>About This Mac</strong> and check
-            your processor type:
-          </p>
+//           <p>
+//             Click the Apple logo () → <strong>About This Mac</strong> and check
+//             your processor type:
+//           </p>
 
-          <ul className="list-disc ml-3 space-y-2">
-            <li>Apple Silicon (M1, M2, M3) → Download ARM version</li>
-            <li>Intel Chip → Download Intel version</li>
-          </ul>
-        </div>
+//           <ul className="list-disc ml-3 space-y-2">
+//             <li>Apple Silicon (M1, M2, M3) → Download ARM version</li>
+//             <li>Intel Chip → Download Intel version</li>
+//           </ul>
+//         </div>
 
-        <div className="mb-12 space-y-3">
-          <h3 className="text-lg md:text-xl font-medium">
-            Step 1 — Download Docker Desktop
-          </h3>
+//         <div className="mb-12 space-y-3">
+//           <h3 className="text-lg md:text-xl font-medium">
+//             Step 1 — Download Docker Desktop
+//           </h3>
 
-          <p>Visit the official Docker website:</p>
+//           <p>Visit the official Docker website:</p>
 
-          <a
-            href="https://www.docker.com/products/docker-desktop/"
-            target="_blank"
-            className="text-blue-600 underline break-all"
-          >
-            https://www.docker.com/products/docker-desktop/
-          </a>
+//           <a
+//             href="https://www.docker.com/products/docker-desktop/"
+//             target="_blank"
+//             className="text-blue-600 underline break-all"
+//           >
+//             https://www.docker.com/products/docker-desktop/
+//           </a>
 
-          <p>
-            Download the correct version for your Mac (Apple Silicon or Intel).
-          </p>
-        </div>
+//           <p>
+//             Download the correct version for your Mac (Apple Silicon or Intel).
+//           </p>
+//         </div>
 
-        <div className="mb-12 space-y-3">
-          <h3 className="text-lg md:text-xl font-semibold">
-            Step 2 — Install Docker
-          </h3>
+//         <div className="mb-12 space-y-3">
+//           <h3 className="text-lg md:text-xl font-semibold">
+//             Step 2 — Install Docker
+//           </h3>
 
-          <ul className="list-disc ml-3 space-y-2">
-            <li>
-              Open the downloaded <code>.dmg</code> file
-            </li>
-            <li>
-              Drag <strong>Docker.app</strong> into the Applications folder
-            </li>
-            <li>Open Docker Desktop from Applications</li>
-          </ul>
+//           <ul className="list-disc ml-3 space-y-2">
+//             <li>
+//               Open the downloaded <code>.dmg</code> file
+//             </li>
+//             <li>
+//               Drag <strong>Docker.app</strong> into the Applications folder
+//             </li>
+//             <li>Open Docker Desktop from Applications</li>
+//           </ul>
 
-          <p>
-            If macOS shows a security popup, click <strong>Open</strong>.
-          </p>
-        </div>
+//           <p>
+//             If macOS shows a security popup, click <strong>Open</strong>.
+//           </p>
+//         </div>
 
-        <div className="mb-12 space-y-3">
-          <h3 className="text-lg md:text-xl font-semibold">
-            Step 3 — Grant Permissions
-          </h3>
+//         <div className="mb-12 space-y-3">
+//           <h3 className="text-lg md:text-xl font-semibold">
+//             Step 3 — Grant Permissions
+//           </h3>
 
-          <p>
-            Docker may request system permissions and your password. Approve
-            these to allow Docker to install required networking components.
-          </p>
-        </div>
+//           <p>
+//             Docker may request system permissions and your password. Approve
+//             these to allow Docker to install required networking components.
+//           </p>
+//         </div>
 
-        <div className="mb-12 space-y-3">
-          <h3 className="text-lg md:text-xl font-semibold">
-            Step 4 — Verify Installation
-          </h3>
+//         <div className="mb-12 space-y-3">
+//           <h3 className="text-lg md:text-xl font-semibold">
+//             Step 4 — Verify Installation
+//           </h3>
 
-          <div className="bg-foreground text-background p-3 rounded-md font-mono text-sm">
-            <div>$ docker --version</div>
-            <div>$ docker run hello-world</div>
-          </div>
+//           <div className="bg-foreground text-background p-3 rounded-md font-mono text-sm">
+//             <div>$ docker --version</div>
+//             <div>$ docker run hello-world</div>
+//           </div>
 
-          <p>If successful, you will see:</p>
+//           <p>If successful, you will see:</p>
 
-          <div className="bg-foreground text-background p-3 rounded-md font-mono text-sm">
-            Hello from Docker! <br />
-            This message shows that your installation appears to be working
-            correctly.
-          </div>
-        </div>
+//           <div className="bg-foreground text-background p-3 rounded-md font-mono text-sm">
+//             Hello from Docker! <br />
+//             This message shows that your installation appears to be working
+//             correctly.
+//           </div>
+//         </div>
 
-        <div className="mb-12 space-y-3">
-          <h3 className="text-lg md:text-xl font-semibold">
-            Optional: Install via Homebrew
-          </h3>
+//         <div className="mb-12 space-y-3">
+//           <h3 className="text-lg md:text-xl font-semibold">
+//             Optional: Install via Homebrew
+//           </h3>
 
-          <div className="bg-foreground text-background p-3 rounded-md font-mono text-sm">
-            brew install --cask docker
-          </div>
+//           <div className="bg-foreground text-background p-3 rounded-md font-mono text-sm">
+//             brew install --cask docker
+//           </div>
 
-          <p>After installation, open Docker from the Applications folder.</p>
-        </div>
-      </div>
-    </section>
-  );
-};
+//           <p>After installation, open Docker from the Applications folder.</p>
+//         </div>
+//       </div>
+//     </section>
+//   );
+// };
 
 export const WorkflowDocumentation = () => {
   return (
@@ -502,7 +502,7 @@ export const DockerOverview = () => {
     <div>
       <WorkflowDiagram />
       <WorkflowDocumentation />
-      <InstallationForMac />
+      {/* <InstallationForMac /> */}
     </div>
   );
 };
