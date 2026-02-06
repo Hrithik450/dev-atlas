@@ -20,7 +20,9 @@ export const InstallationForMac = () => {
         </header>
 
         <div className="mb-12 space-y-3">
-          <h3 className="text-xl font-medium">Step 0 — Check Your Mac Type</h3>
+          <h3 className="text-lg md:text-xl font-medium">
+            Step 0 — Check Your Mac Type
+          </h3>
 
           <p>
             Click the Apple logo () → <strong>About This Mac</strong> and check
@@ -34,7 +36,7 @@ export const InstallationForMac = () => {
         </div>
 
         <div className="mb-12 space-y-3">
-          <h3 className="text-xl font-medium">
+          <h3 className="text-lg md:text-xl font-medium">
             Step 1 — Download Docker Desktop
           </h3>
 
@@ -54,7 +56,9 @@ export const InstallationForMac = () => {
         </div>
 
         <div className="mb-12 space-y-3">
-          <h3 className="text-xl font-semibold">Step 2 — Install Docker</h3>
+          <h3 className="text-lg md:text-xl font-semibold">
+            Step 2 — Install Docker
+          </h3>
 
           <ul className="list-disc ml-3 space-y-2">
             <li>
@@ -72,7 +76,9 @@ export const InstallationForMac = () => {
         </div>
 
         <div className="mb-12 space-y-3">
-          <h3 className="text-xl font-semibold">Step 3 — Grant Permissions</h3>
+          <h3 className="text-lg md:text-xl font-semibold">
+            Step 3 — Grant Permissions
+          </h3>
 
           <p>
             Docker may request system permissions and your password. Approve
@@ -81,7 +87,7 @@ export const InstallationForMac = () => {
         </div>
 
         <div className="mb-12 space-y-3">
-          <h3 className="text-xl font-semibold">
+          <h3 className="text-lg md:text-xl font-semibold">
             Step 4 — Verify Installation
           </h3>
 
@@ -100,7 +106,7 @@ export const InstallationForMac = () => {
         </div>
 
         <div className="mb-12 space-y-3">
-          <h3 className="text-xl font-semibold">
+          <h3 className="text-lg md:text-xl font-semibold">
             Optional: Install via Homebrew
           </h3>
 

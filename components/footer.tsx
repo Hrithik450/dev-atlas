@@ -40,8 +40,9 @@ export function Footer() {
               </a>
             </div>
 
-            <p className="text-xs text-muted-foreground">
-              Built for engineers who care about depth, structure, and scale.
+            <p className="text-sm text-muted-foreground">
+              Built for engineers who care about implementation, structure, and
+              easy.
             </p>
           </div>
         </div>
