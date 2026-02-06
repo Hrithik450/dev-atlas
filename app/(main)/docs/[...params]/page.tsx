@@ -49,13 +49,14 @@ export default function Page() {
   return (
     <div className="container mx-auto">
       <div className="flex flex-col lg:grid lg:grid-cols-[220px_1fr_220px] gap-6 xl:grid-cols-[240px_1fr_240px] xl:gap-8">
-        <DocSidebar
+        {/* <DocSidebar
           label={sidebar.label}
           slug={sidebar.slug}
           pages={sidebar.pages}
-        />
+        /> */}
+        <DocSidebar />
 
-        <div className="p-4 md:p-5 lg:p-0">
+        <div className="max-w-3xl p-4 md:p-5 lg:p-0">
           <PageComponent />
           <PageNavigator
             systemSlug={systemSlug}

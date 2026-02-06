@@ -52,7 +52,7 @@ export const TableOfContent: React.FC<TableOfContentProps> = ({ sections }) => {
   };
 
   return (
-    <aside className="sticky top-48 h-fit w-full hidden lg:block">
+    <aside className="sticky top-44 h-fit w-full hidden lg:block">
       <h2 className="text-muted-foreground">On this page</h2>
       <Separator className="my-4" />
       <div className="relative flex flex-col gap-4">

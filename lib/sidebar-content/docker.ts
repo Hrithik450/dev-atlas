@@ -5,7 +5,7 @@ export const dockerSidebar: DocSidebarProps<"docker"> = {
   slug: "docker",
   pages: [
     { label: "Docker Overview", slug: "docker-overview" },
-    // { label: "Build Images", slug: "build-images" },
+    { label: "Package Applications", slug: "package-applications" },
     // { label: "Run Containers", slug: "run-containers" },
     // { label: "Deploy With Docker", slug: "deploy-with-docker" },
   ],

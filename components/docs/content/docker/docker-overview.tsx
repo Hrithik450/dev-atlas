@@ -1,6 +1,7 @@
 "use client";
 
-import DockerIntroImage from "@/assets/content/docker-intro.png";
+import DockerOverviewImage from "@/assets/content/docker-overview.png";
+import { CodeBlock } from "@/components/code-block";
 import { Maximize2 } from "lucide-react";
 import Image from "next/image";
 
@@ -121,6 +122,89 @@ import Image from "next/image";
 //   );
 // };
 
+export const DockerCommands = () => {
+  return (
+    <section
+      id="docker-commands"
+      data-nav-title="Docker Commands"
+      data-scrollspy
+      className="animate-in fade-in slide-in-from-bottom-4 duration-500"
+    >
+      <div>
+        <h3 className="text-xl md:text-2xl font-medium mb-4">
+          Docker CLI Commands
+        </h3>
+
+        <CodeBlock
+          language="bash"
+          content={`# Docker Installation & Status
+docker --version # Shows the installed Docker version.
+docker ps # Lists running containers (also confirms Docker daemon is running).
+docker info # Displays detailed system-wide Docker information.
+
+# Docker Images
+docker pull <image_name> # Downloads an image from Docker Hub or registry.
+docker images # Lists all locally available images.
+docker rmi <image_id> # Removes a Docker image.
+docker rmi -f <image_id> # Force removes an image (even if used by container).
+
+# Docker Containers
+docker run <image_name> # Creates and runs a new container.
+docker run -it <image_name> # Runs container in interactive terminal mode.
+docker run -d -p 3000:3000 --name node-js <image_name> # Runs in detached mode and maps port 3000.
+docker ps # Lists running containers.
+docker ps -a # Lists all containers (running + stopped).
+docker stop <container_id> # Stops a running container.
+docker start <container_id> # Starts a stopped container.
+docker restart <container_id> # Restarts a container.
+docker rm <container_id> # Deletes a stopped container.
+docker rm -f <container_id> # Force deletes a container.
+
+# Docker Logs & Debugging
+docker logs <container_id> # Shows container logs.
+docker logs -f <container_id> # Streams logs in real-time.
+docker exec -it <container_id> /bin/bash # Opens interactive bash shell.
+docker exec -it <container_id> /bin/sh # Opens sh shell (Alpine-based images).
+
+# Dockerfile Commands
+docker build -t <image_name> . # Builds Docker image from Dockerfile.
+docker run -p 3000:3000 <image_name> # Runs image and maps port 3000.
+
+# Docker Compose (Multi-Container Apps)
+docker compose up # Starts all services in docker-compose.yml.
+docker compose up -d # Starts services in detached mode.
+docker compose down # Stops and removes all services.
+docker compose up --build # Rebuilds images before starting.
+
+# Docker Volumes
+docker volume create <volume_name> # Creates a named volume.
+docker volume ls # Lists all volumes.
+docker run -v <volume_name>:/data <image_name> # Mounts volume into container.
+docker volume rm <volume_name> # Deletes a volume.
+
+# Docker Networks
+docker network ls # Lists all Docker networks.
+docker network create <network_name> # Creates a custom network.
+docker run --network <network_name> <image_name> # Runs container inside network.
+docker network inspect <network_name> # Shows network details.
+
+# Production-Grade Commands
+docker run -d --restart unless-stopped <image_name> # Restart container automatically unless manually stopped.
+docker run --env-file .env <image_name> # Inject environment variables from file.
+docker run -m 512m <image_name> # Limits container memory to 512MB.
+
+# Cleanup Commands
+docker container prune # Removes all stopped containers.
+docker image prune # Removes dangling images.
+docker system prune # Removes unused containers, networks, images.
+docker system prune -a # Aggressive cleanup (removes all unused images).
+`}
+        />
+      </div>
+    </section>
+  );
+};
+
 export const WorkflowDocumentation = () => {
   return (
     <section
@@ -228,18 +312,6 @@ export const WorkflowDocumentation = () => {
                   The result/output is sent back to the client and displayed.
                 </li>
               </ul>
-
-              <h4 className="font-medium mt-4">
-                Common Docker Client Commands
-              </h4>
-
-              <div className="bg-foreground text-background p-3 rounded-md font-mono text-sm">
-                <div>$ docker build -t myapp .</div>
-                <div>$ docker run -p 3000:3000 myapp</div>
-                <div>$ docker pull nginx</div>
-                <div>$ docker ps</div>
-                <div>$ docker stop container_id</div>
-              </div>
             </div>
 
             <div className="space-y-6">
@@ -382,11 +454,12 @@ export const WorkflowDocumentation = () => {
 
               <h4 className="font-medium mt-4">Image Tags & Versioning</h4>
 
-              <div className="bg-foreground text-background p-3 rounded-md font-mono text-sm">
-                nginx:latest <br />
-                node:18 <br />
-                myapp:v1.0.2
-              </div>
+              <CodeBlock
+                language="bash"
+                content={`nginx:latest
+node:18 
+myapp:v1.0.2`}
+              />
 
               <p>
                 If no tag is specified, Docker automatically uses the
@@ -413,11 +486,12 @@ export const WorkflowDocumentation = () => {
                 </li>
               </ul>
 
-              <div className="bg-foreground text-background p-3 rounded-md font-mono text-sm">
-                <div>$ docker pull nginx</div>
-                <div>$ docker build -t myapp:v1 .</div>
-                <div>$ docker push myapp:v1</div>
-              </div>
+              <CodeBlock
+                language="bash"
+                content={`docker pull nginx  # Download nginx image from Docker Hub
+docker build -t myapp:v1 . # Build Docker image tagged as v1
+docker push myapp:v1 # Push image to configured registry`}
+              />
 
               <p>
                 When you run a container and the image does not exist locally,
@@ -428,9 +502,10 @@ export const WorkflowDocumentation = () => {
 
               <p>To push images to a registry, authentication is required.</p>
 
-              <div className="bg-foreground text-background p-3 rounded-md font-mono text-sm">
-                $ docker login
-              </div>
+              <CodeBlock
+                language="bash"
+                content={`$ docker login # Authenticate with Docker Hub or private registry`}
+              />
             </div>
 
             <div className="space-y-6">
@@ -444,10 +519,10 @@ export const WorkflowDocumentation = () => {
                 containers.
               </p>
 
-              <div className="bg-foreground text-background p-3 rounded-md font-mono text-sm">
-                $ docker run nginx
-              </div>
-
+              <CodeBlock
+                language="bash"
+                content={`$ docker run nginx # Create and start a new nginx container`}
+              />
               <p>In this example:</p>
 
               <ul className="list-disc ml-6 space-y-2">
@@ -467,7 +542,7 @@ export const WorkflowDocumentation = () => {
 
 export const WorkflowDiagram = () => {
   const openInNewTab = () => {
-    window.open(DockerIntroImage.src, "_blank");
+    window.open(DockerOverviewImage.src, "_blank");
   };
 
   return (
@@ -477,7 +552,7 @@ export const WorkflowDiagram = () => {
       data-nav-title="Workflow Diagram"
       className="pt-6 md:pt-20"
     >
-      <div className="relative w-full overflow-hidden rounded-xl md:rounded-4xl p-0.5 bg-[linear-gradient(to_right,var(--border-gradient-from),var(--border-gradient-via),var(--border-gradient-to))] shadow-xs">
+      <div className="relative w-full overflow-hidden rounded-xl md:rounded-4xl bg-[linear-gradient(to_right,var(--border-gradient-from),var(--border-gradient-via),var(--border-gradient-to))] shadow-xs">
         <button
           onClick={openInNewTab}
           aria-label="Open image in new tab"
@@ -487,8 +562,8 @@ export const WorkflowDiagram = () => {
         </button>
 
         <Image
-          src={DockerIntroImage}
-          alt="Docker Architecture Diagram"
+          src={DockerOverviewImage}
+          alt="Workflow Diagram"
           className="w-full h-auto object-contain rounded-xl md:rounded-4xl"
           priority
         />
@@ -502,6 +577,7 @@ export const DockerOverview = () => {
     <div>
       <WorkflowDiagram />
       <WorkflowDocumentation />
+      <DockerCommands />
       {/* <InstallationForMac /> */}
     </div>
   );

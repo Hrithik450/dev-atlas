@@ -20,17 +20,17 @@ export function PageNavigator<T extends SystemSlug>({
   const next = pages[currentIndex + 1];
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-12 pt-6">
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 my-12">
       {prev ? (
         <Link
           href={`/docs/${systemSlug}/${prev.slug}`}
-          className="group flex flex-col items-start p-4 rounded-lg border border-secondary-foreground/20 hover:border-primary transition-colors"
+          className="group flex flex-col items-start p-4 rounded-lg border border-foreground/20 hover:border-secondary-foreground transition-colors"
         >
           <div className="flex items-center text-sm text-muted-foreground mb-1">
             <ChevronLeft className="mr-1 size-4" />
             <span>Previous Page</span>
           </div>
-          <span className="font-bold text-lg text-foreground group-hover:text-primary">
+          <span className="font-bold text-lg text-foreground group-hover:text-secondary-foreground">
             {prev.label}
           </span>
         </Link>
@@ -41,13 +41,13 @@ export function PageNavigator<T extends SystemSlug>({
       {next ? (
         <Link
           href={`/docs/${systemSlug}/${next.slug}`}
-          className="group flex flex-col items-end text-right p-4 rounded-lg border border-border hover:border-primary transition-colors"
+          className="group flex flex-col items-end text-right p-4 rounded-lg border border-foreground/20 hover:border-secondary-foreground transition-colors"
         >
           <div className="flex items-center text-sm text-muted-foreground mb-1">
             <span>Next Page</span>
             <ChevronRight className="ml-1 size-4" />
           </div>
-          <span className="font-bold text-lg text-foreground group-hover:text-primary">
+          <span className="font-bold text-lg text-foreground group-hover:text-secondary-foreground">
             {next.label}
           </span>
         </Link>
