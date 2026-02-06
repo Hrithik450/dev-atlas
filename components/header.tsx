@@ -178,9 +178,9 @@ export function Header() {
                     animate={{ opacity: 1, height: "auto" }}
                     exit={{ opacity: 0, height: 0 }}
                     transition={{ duration: 0.3 }}
-                    className="overflow-hidden"
+                    className="overflow-hidden mt-2"
                   >
-                    <div className="flex flex-col gap-3 pt-2 px-2">
+                    <div className="flex flex-col gap-4 pt-2 px-2">
                       {sidebar.pages &&
                         sidebar.pages.map((page) => (
                           <Link
