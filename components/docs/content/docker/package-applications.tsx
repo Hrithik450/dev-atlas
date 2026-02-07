@@ -100,7 +100,7 @@ COPY package*.json ./
 RUN pnpm install
 
 # Copy the rest of the source code
-COPY . .
+COPY . ./
 
 # If you don't have a build step, you can remove this line.
 RUN pnpm run build
