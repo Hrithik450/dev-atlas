@@ -383,6 +383,13 @@ $ docker push username/myapp:v1          # Upload image to Docker registry`}
             <div className="space-y-4">
               <h3 className="text-lg font-medium">Step 7: Run Container</h3>
 
+              <p className="text-muted-foreground">
+                Since this Node.js app listens on port <code>3000</code> inside
+                the container, we map it to port <code>3000</code> on the host.
+                Ensure the host port matches the port your node.js application
+                is configured to use.
+              </p>
+
               <CodeBlockWithCopy
                 language="bash"
                 content={`docker run -p 3000:3000 myapp:v1  # Runs the container and maps host port 3000 to container port 3000 because containers are isolated and have their own internal ports.`}
