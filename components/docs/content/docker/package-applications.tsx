@@ -20,7 +20,7 @@ export const WorkflowDocumentation = () => {
               Packaging Applications
             </h1>
             <div className="text-sm text-muted-foreground">
-              Last updated: 06 Feb 2026
+              Last updated: 07 Feb 2026
             </div>
           </div>
         </header>
@@ -81,14 +81,81 @@ export const WorkflowDocumentation = () => {
               />
 
               <CodeBlockWithCopy
-                language="bash"
-                content={`FROM node:18-alpine # picks a small, lightweight Linux image with Node.js version 18 pre-installed.
-  WORKDIR /app # Sets the "home" folder inside the container where all commands will run.
-  COPY package*.json ./ # Moves only your dependency lists over first to speed up future builds via caching.
-  RUN npm install # Downloads and installs all the libraries your project needs inside the image.
-  COPY . . # Copies the rest of your actual source code into the image.
-  EXPOSE 3000 # Tells Docker the app will listen on port 3000 (standard for React/Node).
-  CMD ["node", "server.js"] # The final instruction that actually starts your server when the container turns on.`}
+                language="dockerfile"
+                content={`# Development / Build Stage
+# This stage installs ALL dependencies (including devDependencies) and builds the application.
+
+# Based on which node version your backend built,
+# We'll use node.js 22 (LTS) with lightweight Alpine Linux and name this build stage "builder"
+FROM node:22-alpine AS builder 
+
+# Set working directory inside the container
+WORKDIR /app
+
+# Copy dependency files first (better Docker layer caching)
+COPY package*.json ./
+
+# Install ALL dependencies (dev + prod)
+# Needed for building the project (e.g., TypeScript, ESLint)
+RUN pnpm install
+
+# Copy the rest of the source code
+COPY . .
+
+# If you don't have a build step, you can remove this line.
+RUN pnpm run build
+
+# Production Stage (This is the final image that will be deployed.)
+# This stage installs only production dependencies, no devDependencies.
+FROM node:22-alpine
+WORKDIR /app
+
+# Set environment to production
+# This improves performance and ensures devDependencies are ignored
+ENV NODE_ENV=production
+
+# Create a non-root user for better security (containers should not run as root)
+# Create a system group named "appgroup"
+# -S → creates a system group (no login, minimal privileges)
+# Groups are used to manage permissions inside the container
+# Create a system user named "appuser"
+# -S → creates a system user (no password, no login shell)
+# -G appgroup → assign this user to the "appgroup"
+# This user will be used to run the Node.js application
+RUN addgroup -S appgroup && adduser -S appuser -G appgroup
+
+# Copy dependency files first
+# This improves Docker layer caching (dependencies reinstall only when they change)
+COPY package*.json ./
+
+# Install ONLY production dependencies
+# "npm ci" ensures clean, deterministic installs (recommended for production)
+RUN npm ci --omit=dev
+
+# Copy application files
+# If build exists → copy compiled output (dist)
+COPY --from=builder /app/dist ./dist
+
+# If no build → copy source files directly
+COPY --from=builder /app/*.js ./
+
+# chown → "change owner" command in Linux
+# -R → recursive (apply to all files and subfolders inside /app)
+# appuser → new file owner (the user we created earlier)
+# appgroup → new group owner
+# /app → target directory (your application folder inside container noted earlier)
+RUN chown -R appuser:appgroup /app
+
+# Switch from root user to the safer non-root user (security best practice)
+# After this line, all commands run as "appuser"
+USER appuser
+
+# Expose the port your app runs on
+EXPOSE 3000
+
+# Start the Node.js application
+CMD ["node", "server.js"]
+`}
               />
 
               <p>
@@ -97,7 +164,7 @@ export const WorkflowDocumentation = () => {
               </p>
 
               <div className="rounded-2xl border border-blue-500/30 bg-blue-500/5 p-3">
-                <p className="mb-2 text-muted-foreground">
+                <p className="mb-1 text-muted-foreground">
                   For a complete list of Dockerfile instructions and advanced
                   patterns, refer to the official Docker documentation.
                 </p>
@@ -138,24 +205,6 @@ export const WorkflowDocumentation = () => {
                 The <strong>Docker Daemon</strong> reads the Dockerfile and
                 builds a layered image.
               </p>
-
-              <p>Output:</p>
-              <CodeBlock
-                language="bash"
-                content={`[+] Building 6.3s (8/8) FINISHED
- => [internal] load build definition from Dockerfile      0.1s
- => => transferring dockerfile: 245B                      0.0s
- => [internal] load .dockerignore                         0.1s
- => => transferring context: 2B                           0.0s
- => [1/5] FROM docker.io/library/node:18-alpine          1.5s
- => [2/5] WORKDIR /app                                    0.2s
- => [3/5] COPY package*.json ./                           0.1s
- => [4/5] RUN npm install                                 3.8s
- => [5/5] COPY . .                                        0.1s
- => exporting to image                                    0.3s
- => => writing image sha256:abc123xyz                     0.1s
- => => naming to docker.io/library/myapp:v1               0.0s`}
-              />
             </div>
 
             <div className="space-y-4">
@@ -191,6 +240,21 @@ export const WorkflowDocumentation = () => {
                 language="bash"
                 content={`$ docker images    # List all locally available Docker images`}
               />
+
+              <div className="rounded-2xl border border-blue-500/30 bg-blue-500/5 p-3">
+                <p className="mb-1 text-muted-foreground">
+                  You can explore and search for official and community Docker
+                  images on Docker Hub.
+                </p>
+                <a
+                  href="https://hub.docker.com/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-blue-600 underline break-all"
+                >
+                  https://hub.docker.com/
+                </a>
+              </div>
             </div>
 
             <div className="space-y-4">
