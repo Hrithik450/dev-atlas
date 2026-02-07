@@ -365,6 +365,11 @@ $ docker push username/myapp:v1          # Upload image to Docker registry`}
               />
 
               <p className="text-muted-foreground">
+                You can find your Docker username in the Docker Desktop
+                application under your profile section.
+              </p>
+
+              <p className="text-muted-foreground">
                 Once pushed, the image is stored in the registry and can be
                 pulled on any server using:{" "}
               </p>
