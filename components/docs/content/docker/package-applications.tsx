@@ -62,7 +62,52 @@ export const WorkflowDocumentation = () => {
 
             <div className="space-y-4">
               <h3 className="text-lg font-medium">
-                Step 2: Create a Dockerfile
+                Step 2: Create a .dockerignore File
+              </h3>
+
+              <p className="text-muted-foreground">
+                The <code>.dockerignore</code> file prevents unnecessary files
+                like <code>node_modules</code> from being copied into the Docker
+                image. This avoids build errors and makes your image smaller and
+                faster.
+              </p>
+
+              <CodeBlock
+                language="bash"
+                content={`my-node-app/
+   ├── .dockerignore
+   ├── package.json
+   ├── package-lock.json
+   ├── server.js`}
+              />
+
+              <CodeBlockWithCopy
+                language=".dockerignore"
+                content={`node_modules
+dist
+.git
+Dockerfile
+docker-compose.yml
+.env`}
+              />
+
+              <div className="rounded-2xl border border-amber-500/30 bg-amber-500/5 p-3">
+                <p className="mb-2 text-muted-foreground">
+                  ⚠️ Without <code>.dockerignore</code>, Docker may try to copy
+                  your local <code>node_modules</code> into the container, which
+                  can cause errors like:
+                </p>
+
+                <CodeBlock
+                  language="bash"
+                  content={`cannot replace to directory ... /app/node_modules/... with file`}
+                />
+              </div>
+            </div>
+
+            <div className="space-y-4">
+              <h3 className="text-lg font-medium">
+                Step 3: Create a Dockerfile
               </h3>
 
               <p className="text-muted-foreground">
@@ -74,7 +119,8 @@ export const WorkflowDocumentation = () => {
               <CodeBlock
                 language="bash"
                 content={`my-node-app/
-   |__ Dockerfile
+   ├── Dockerfile
+   ├── .dockerignore
    ├── package.json
    ├── package-lock.json
    ├── server.js`}
@@ -82,7 +128,7 @@ export const WorkflowDocumentation = () => {
 
               <CodeBlockWithCopy
                 language="dockerfile"
-                content={`# Development / Build Stage
+                content={`# Builder Stage (Ignore this stage if you don't have build)
 # This stage installs ALL dependencies (including devDependencies) and builds the application.
 
 # Based on which node version your backend built,
@@ -97,13 +143,13 @@ COPY package*.json ./
 
 # Install ALL dependencies (dev + prod)
 # Needed for building the project (e.g., TypeScript, ESLint)
-RUN pnpm install
+RUN npm install
 
-# Copy the rest of the source code
+# Copy the rest of the source code from source to destination
 COPY . ./
 
-# If you don't have a build step, you can remove this line.
-RUN pnpm run build
+# Build the application (compile source code).
+RUN npm run build
 
 # Production Stage (This is the final image that will be deployed.)
 # This stage installs only production dependencies, no devDependencies.
@@ -129,15 +175,14 @@ RUN addgroup -S appgroup && adduser -S appuser -G appgroup
 COPY package*.json ./
 
 # Install ONLY production dependencies
-# "npm ci" ensures clean, deterministic installs (recommended for production)
-RUN npm ci --omit=dev
+RUN npm install --omit=dev
 
 # Copy application files
 # If build exists → copy compiled output (dist)
 COPY --from=builder /app/dist ./dist
 
 # If no build → copy source files directly
-COPY --from=builder /app/*.js ./
+COPY . ./
 
 # chown → "change owner" command in Linux
 # -R → recursive (apply to all files and subfolders inside /app)
@@ -153,8 +198,8 @@ USER appuser
 # Expose the port your app runs on
 EXPOSE 3000
 
-# Start the Node.js application
-CMD ["node", "server.js"]
+# Start the Node.js application (if build is present, replace server.js with dist/server.js)
+CMD ["node", "server.js"] 
 `}
               />
 
@@ -182,7 +227,7 @@ CMD ["node", "server.js"]
 
             <div className="space-y-4">
               <h3 className="text-lg font-medium">
-                Step 3: Docker Client Sends Build Request
+                Step 4: Docker Client Sends Build Request
               </h3>
 
               <p className="text-muted-foreground">
@@ -190,7 +235,7 @@ CMD ["node", "server.js"]
                 to the Docker Daemon.
               </p>
 
-              <div className="rounded-2xl border border-border bg-secondary p-3">
+              <div className="rounded-2xl border border-amber-500/30 bg-amber-500/5 p-3">
                 <strong>Note:</strong> Make sure Docker Desktop is installed and
                 running before executing the build command. The Docker Daemon
                 must be active to process the request.
@@ -198,7 +243,7 @@ CMD ["node", "server.js"]
 
               <CodeBlockWithCopy
                 language="bash"
-                content={`docker build -t myapp:v1 . # Creates an image named myapp with version v1 using the Dockerfile in your current folder.`}
+                content={`docker build -t myapp:v1 .  # Builds a Docker image from the Dockerfile in the current directory and tags it as "myapp" with version "v1"`}
               />
 
               <p>
@@ -209,7 +254,52 @@ CMD ["node", "server.js"]
 
             <div className="space-y-4">
               <h3 className="text-lg font-medium">
-                Step 4: Docker Image is Created
+                Optional: Rebuild or Create a New Image Version
+              </h3>
+
+              <p className="text-muted-foreground">
+                If you update your application or encounter errors, update your
+                dockerfile, rebuild the image. You can either reuse the same
+                version tag or create a new one.
+              </p>
+
+              <CodeBlockWithCopy
+                language="bash"
+                content={`# Rebuild using the same tag (overwrites previous image)
+docker build -t myapp:v1 .`}
+              />
+
+              <CodeBlockWithCopy
+                language="bash"
+                content={`# OR build a new version tag (recommended for updates)
+docker build -t myapp:v2 .`}
+              />
+
+              <p className="text-muted-foreground">
+                If issues persist, force a clean rebuild without using cached
+                layers:
+              </p>
+
+              <CodeBlockWithCopy
+                language="bash"
+                content={`docker build --no-cache -t myapp:v2 .`}
+              />
+
+              <p className="text-muted-foreground">
+                If a previous container is still running, stop and remove it
+                before running the updated image:
+              </p>
+
+              <CodeBlockWithCopy
+                language="bash"
+                content={`docker ps
+docker stop <container_id>
+docker rm <container_id>`}
+              />
+            </div>
+            <div className="space-y-4">
+              <h3 className="text-lg font-medium">
+                Step 5: Docker Image is Created
               </h3>
 
               <p className="text-muted-foreground">
@@ -259,7 +349,7 @@ CMD ["node", "server.js"]
 
             <div className="space-y-4">
               <h3 className="text-lg font-medium">
-                Step 5: Push to Docker Registry (Optional)
+                Step 6: Push to Docker Registry (Optional)
               </h3>
 
               <p className="text-muted-foreground">
@@ -286,28 +376,36 @@ $ docker push username/myapp:v1          # Upload image to Docker registry`}
             </div>
 
             <div className="space-y-4">
-              <h3 className="text-lg font-medium">Step 6: Run Container</h3>
+              <h3 className="text-lg font-medium">Step 7: Run Container</h3>
 
               <CodeBlockWithCopy
                 language="bash"
-                content={`$ docker run -p 3000:3000 myapp:v1   # Run container and map port 3000`}
+                content={`docker run -p 3000:3000 myapp:v1  # Runs the container and maps host port 3000 to container port 3000 because containers are isolated and have their own internal ports.`}
               />
+
+              <p className="text-muted-foreground">
+                If your application uses environment variables, use the{" "}
+                <code>--env-file</code> option to securely load them from a{" "}
+                <code>.env</code> file (make sure .env file exists in your
+                current dir):
+              </p>
+
+              <CodeBlockWithCopy
+                language="bash"
+                content={`docker run --env-file .env -p 3000:3000 myapp:v1`}
+              />
+
+              <div className="rounded-2xl border border-blue-500/30 bg-blue-500/5 p-3">
+                <p className="text-sm text-muted-foreground">
+                  This keeps sensitive values (like database URLs or API keys)
+                  outside the Docker image instead of baking them into it.
+                </p>
+              </div>
 
               <p className="text-muted-foreground">
                 Docker creates and starts a new container instance from the
                 image.
               </p>
-
-              <p>Output:</p>
-
-              <CodeBlock
-                language="bash"
-                content={`Unable to find image 'myapp:v1' locally
-v1: Pulling from library/myapp
-Digest: sha256:abc123xyz
-Status: Downloaded newer image for myapp:v1
-3f5c8d9e7a12b4c56d789e0123abc456789def0123456789abcdef0123456789`}
-              />
 
               <p className="text-muted-foreground">
                 If the image already exists locally, Docker immediately starts
