@@ -1,7 +1,7 @@
 "use client";
 
 import PackageApplicationsImage from "@/assets/content/package-applications.png";
-import { CodeBlock } from "@/components/code-block";
+import { CodeBlock, CodeBlockWithCopy } from "@/components/code-block";
 import { Maximize2 } from "lucide-react";
 import Image from "next/image";
 
@@ -66,7 +66,9 @@ export const WorkflowDocumentation = () => {
               </h3>
 
               <p className="text-muted-foreground">
-                A Dockerfile defines how your image should be built.
+                A Dockerfile is a set of instructions that tells Docker how to
+                create an image for your application, including what software to
+                install and how to start the app.
               </p>
 
               <CodeBlock
@@ -78,7 +80,7 @@ export const WorkflowDocumentation = () => {
    ├── server.js`}
               />
 
-              <CodeBlock
+              <CodeBlockWithCopy
                 language="bash"
                 content={`FROM node:18-alpine # picks a small, lightweight Linux image with Node.js version 18 pre-installed.
   WORKDIR /app # Sets the "home" folder inside the container where all commands will run.
@@ -89,19 +91,25 @@ export const WorkflowDocumentation = () => {
   CMD ["node", "server.js"] # The final instruction that actually starts your server when the container turns on.`}
               />
 
-              <div>
-                <h3 className="text-lg font-medium mb-4">
-                  More Useful Dockerfile Patterns (For your learning purpose)
-                </h3>
+              <p>
+                This Dockerfile provides a solid foundation and can be adapted
+                for other applications.
+              </p>
 
-                <CodeBlock
-                  language="bash"
-                  content={`FROM node:18.20-alpine # Use specific version instead of latest (best practice)
-RUN addgroup app && adduser -S -G app app
-USER app # Create non-root user for security
-RUN npm install --only=production # Install only production dependencies
-`}
-                />
+              <div className="rounded-2xl border border-blue-500/30 bg-blue-500/5 p-3">
+                <p className="mb-2 text-muted-foreground">
+                  For a complete list of Dockerfile instructions and advanced
+                  patterns, refer to the official Docker documentation.
+                </p>
+
+                <a
+                  href="https://docs.docker.com/reference/dockerfile/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-blue-600 underline break-all"
+                >
+                  https://docs.docker.com/reference/dockerfile/
+                </a>
               </div>
             </div>
 
@@ -115,7 +123,13 @@ RUN npm install --only=production # Install only production dependencies
                 to the Docker Daemon.
               </p>
 
-              <CodeBlock
+              <div className="rounded-2xl border border-border bg-secondary p-3">
+                <strong>Note:</strong> Make sure Docker Desktop is installed and
+                running before executing the build command. The Docker Daemon
+                must be active to process the request.
+              </div>
+
+              <CodeBlockWithCopy
                 language="bash"
                 content={`docker build -t myapp:v1 . # Creates an image named myapp with version v1 using the Dockerfile in your current folder.`}
               />
@@ -173,14 +187,14 @@ RUN npm install --only=production # Install only production dependencies
                 You can verify the newly created image using:
               </p>
 
-              <CodeBlock
+              <CodeBlockWithCopy
                 language="bash"
                 content={`$ docker images    # List all locally available Docker images`}
               />
             </div>
 
             <div className="space-y-4">
-              <h3 className="text-lg font-semibold">
+              <h3 className="text-lg font-medium">
                 Step 5: Push to Docker Registry (Optional)
               </h3>
 
@@ -189,7 +203,7 @@ RUN npm install --only=production # Install only production dependencies
                 can push it to a Docker registry such as Docker Hub.
               </p>
 
-              <CodeBlock
+              <CodeBlockWithCopy
                 language="bash"
                 content={`$ docker login                          # Authenticate with Docker Hub
 $ docker tag myapp:v1 username/myapp:v1  # Tag image with your Docker Hub username
@@ -201,7 +215,7 @@ $ docker push username/myapp:v1          # Upload image to Docker registry`}
                 pulled on any server using:{" "}
               </p>
 
-              <CodeBlock
+              <CodeBlockWithCopy
                 language="bash"
                 content={`docker pull username/myapp:v1`}
               />
@@ -210,7 +224,7 @@ $ docker push username/myapp:v1          # Upload image to Docker registry`}
             <div className="space-y-4">
               <h3 className="text-lg font-medium">Step 6: Run Container</h3>
 
-              <CodeBlock
+              <CodeBlockWithCopy
                 language="bash"
                 content={`$ docker run -p 3000:3000 myapp:v1   # Run container and map port 3000`}
               />
@@ -240,7 +254,7 @@ Status: Downloaded newer image for myapp:v1
                 You can verify the running container using:
               </p>
 
-              <CodeBlock
+              <CodeBlockWithCopy
                 language="bash"
                 content={`$ docker ps   # List running containers`}
               />
